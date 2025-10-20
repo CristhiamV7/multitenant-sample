@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcMultitenantService";
+
+package trackings;
+
+message TrackingModel {
+    string id = 1;
+    string name = 2;
+    string tenantId = 3;
+}
+
+message TrackingIdRequest {
+    string id = 1;
+}
+
+message CreateTrackingRequest {
+    string name = 1;
+    string tenantId = 2;
+}
+
+message UpdateTrackingRequest {
+    string id = 1;
+    string name = 2;
+    string tenantId = 3;
+}
+
+message TrackingResponse {
+    TrackingModel tracking = 1;
+}
+
+message TrackingListResponse {
+    repeated TrackingModel trackings = 1;
+}
+
+message ListTrackingsRequest {
+}
+
+message DeleteTrackingReply {
+  bool success = 1;
+  string message = 2;
+}
+
+service TrackingEvent {
+    rpc CreateTracking(CreateTrackingRequest) returns (TrackingResponse);
+    rpc GetTracking(TrackingIdRequest) returns (TrackingResponse);
+    rpc UpdateTracking(UpdateTrackingRequest) returns (TrackingResponse);
+    rpc DeleteTracking(TrackingIdRequest) returns (DeleteTrackingReply);
+    rpc ListTrackings(ListTrackingsRequest) returns (stream TrackingModel);
+}

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcMultitenantService";
+
+package claims;
+
+message ClaimModel {
+    string id = 1;
+    string provider_name = 2;
+    string country_code = 3;
+}
+
+message GetAllClaimsRequest {
+}
+
+message GetAllClaimsReply {
+    repeated ClaimModel claims = 1;
+}
+
+service Claim {
+    rpc GetAllClaims (GetAllClaimsRequest) returns (stream GetAllClaimsReply);
+}
